@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+.ipynb_checkpoints/
+
+# Data — too large for git, document download instructions in README
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Model checkpoints — use Git LFS or release artifacts instead
+models/saved/*.h5
+models/saved/*.pth
+models/saved/*.keras
+!models/saved/.gitkeep
+
+# Logs and results that change every run
+results/figures/*.png
+results/metrics/*.json
+logs/
+runs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

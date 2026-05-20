@@ -1,0 +1,58 @@
+# Configuration for Breast Cancer Detection experiments
+# All paths are relative to the project root.
+
+dataset:
+  name: "CBIS-DDSM"
+  raw_dir: "data/raw/cbis-ddsm"
+  processed_dir: "data/processed"
+  image_size: 224          # final input size for CNNs
+  channels: 3              # convert grayscale mammograms to 3-channel for transfer learning
+  num_classes: 2           # benign vs malignant
+  test_split: 0.15
+  val_split: 0.15
+  random_seed: 42
+
+augmentation:
+  rotation_range: 20
+  horizontal_flip: true
+  vertical_flip: false     # mammograms are oriented — don't flip vertically
+  zoom_range: 0.1
+  brightness_range: [0.9, 1.1]
+  contrast_range: [0.9, 1.1]
+
+training:
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.0001
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.5
+
+models:
+  baseline_cnn:
+    framework: "keras"
+    dropout: 0.5
+  vgg16:
+    framework: "keras"
+    pretrained: true
+    freeze_base: true
+    fine_tune_layers: 4    # unfreeze last N layers after initial training
+    dropout: 0.5
+  unet:
+    framework: "keras"
+    depth: 4
+    base_filters: 64
+  resnet_pytorch:
+    framework: "pytorch"
+    architecture: "resnet50"
+    pretrained: true
+
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - auc
+  save_confusion_matrix: true
+  save_roc_curve: true
